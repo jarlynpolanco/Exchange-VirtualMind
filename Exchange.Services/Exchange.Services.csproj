@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Exchange.Contracts\Exchange.Contracts.csproj" />
+    <ProjectReference Include="..\Exchange.Core\Exchange.Core.csproj" />
+    <ProjectReference Include="..\Exchange.Data\Exchange.Data.csproj" />
+  </ItemGroup>
+
+</Project>
