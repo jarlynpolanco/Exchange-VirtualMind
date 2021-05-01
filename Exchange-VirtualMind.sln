@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exchange.Services", "Exchan
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exchange.Models", "Exchange.Models\Exchange.Models.csproj", "{2ACC5423-F148-47E6-B011-40451219272A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exchange.Data", "Exchange.Data\Exchange.Data.csproj", "{7E750935-206A-41AD-AB1F-5F14D792768F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exchange.Data", "Exchange.Data\Exchange.Data.csproj", "{7E750935-206A-41AD-AB1F-5F14D792768F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exchange.Core", "Exchange.Core\Exchange.Core.csproj", "{11175A18-BA1E-42C8-AF4D-B3015DFB0880}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exchange.Core", "Exchange.Core\Exchange.Core.csproj", "{11175A18-BA1E-42C8-AF4D-B3015DFB0880}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exchange.Tests", "Exchange.Tests\Exchange.Tests.csproj", "{F23CE9B5-75E0-4C9A-BF9D-F4B10AFFFE7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{11175A18-BA1E-42C8-AF4D-B3015DFB0880}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11175A18-BA1E-42C8-AF4D-B3015DFB0880}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11175A18-BA1E-42C8-AF4D-B3015DFB0880}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F23CE9B5-75E0-4C9A-BF9D-F4B10AFFFE7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F23CE9B5-75E0-4C9A-BF9D-F4B10AFFFE7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F23CE9B5-75E0-4C9A-BF9D-F4B10AFFFE7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F23CE9B5-75E0-4C9A-BF9D-F4B10AFFFE7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

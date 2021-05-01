@@ -1,7 +1,6 @@
 ﻿using Exchange.Contracts;
 using Exchange.Models;
 using Microsoft.Extensions.Options;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Exchange.Services
@@ -16,25 +15,14 @@ namespace Exchange.Services
             _appSettings = appSettings.Value;
         }
 
-        public async Task<List<RateResponse>> Get()
+        public async Task<CurrencyRate> Get()
         {
             var response = await _httpService.Get<string[]>(_appSettings.ExchangeRateService);
-            return new List<RateResponse>()
+            return new CurrencyRate()
             {
-                new RateResponse()
-                {
-                    Buy = decimal.Parse(response[0]),
-                    Sale = decimal.Parse(response[1]),
-                    Currency = "USD",
-                    DateUpdate = response[2]
-                },
-                new RateResponse()
-                {
-                    Buy = decimal.Parse(response[0])/4,
-                    Sale = decimal.Parse(response[1])/4,
-                    Currency = "BRL",
-                    DateUpdate = response[2]
-                },
+                Buy = decimal.Parse(response[0]),
+                Sale = decimal.Parse(response[1]),
+                DateUpdate = response[2]
             };
         }
     }

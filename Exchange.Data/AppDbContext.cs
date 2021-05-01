@@ -12,6 +12,7 @@ namespace Exchange.Data
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<Purchase> Purchases { get; set; }
         public virtual DbSet<PurchaseLimit> PurchaseLimits { get; set; }
+        public virtual DbSet<Log> Logs { get; set; }
 
         public AppDbContext() { }
 

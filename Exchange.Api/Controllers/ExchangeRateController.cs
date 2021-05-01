@@ -7,7 +7,6 @@ using Exchange.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Threading.Tasks;
-using System.Linq;
 using Exchange.Models;
 
 namespace Exchange.Api.Controllers
@@ -16,16 +15,16 @@ namespace Exchange.Api.Controllers
     [ApiController]
     public class ExchangeRateController : Controller
     {
-        private readonly ICurrencyExchange _currencyExchange;
+        private readonly IExchangeRateProvider _exchangeRateProvider;
         private readonly PurchaseLimitService _purchaseLimitService;
         private readonly PurchaseService _purchaseService;
         private readonly UserService _userService;
         private readonly IMapper _mapper;
 
-        public ExchangeRateController(ICurrencyExchange currencyExchange, PurchaseLimitService purchaseLimitService, PurchaseService purchaseService,
+        public ExchangeRateController(IExchangeRateProvider exchangeRateProvider, PurchaseLimitService purchaseLimitService, PurchaseService purchaseService,
             UserService userService, IMapper mapper) 
         {
-            _currencyExchange = currencyExchange;
+            _exchangeRateProvider = exchangeRateProvider;
             _purchaseLimitService = purchaseLimitService;
             _purchaseService = purchaseService;
             _userService = userService;
@@ -41,7 +40,7 @@ namespace Exchange.Api.Controllers
                 throw new HttpStatusException($"The selected currency is not allowed",
                    HttpStatusCode.BadRequest);
 
-            var response = await _currencyExchange.Get();
+            var response = await _exchangeRateProvider.GetRateAsync(currency);
 
             if (response == null)           
                 throw new HttpStatusException($"Something went wrong. Please contact the System Administrator.",
@@ -49,7 +48,7 @@ namespace Exchange.Api.Controllers
 
             return Ok(new GenericResponse<RateDTO>()
             {
-                Data = _mapper.Map<RateDTO>(response.FirstOrDefault(x => x.Currency == currency)),
+                Data = _mapper.Map<RateDTO>(response),
                 ErrorCode = "200"
             });
         }
@@ -63,13 +62,13 @@ namespace Exchange.Api.Controllers
                 throw new HttpStatusException($"The selected currency is not allowed",
                    HttpStatusCode.BadRequest);
 
-            var response = await _currencyExchange.Get();
+            var response = await _exchangeRateProvider.GetRateAsync(purchaseDTO.Currency);
 
             if (response == null)
                 throw new HttpStatusException($"Something went wrong. Please contact the System Administrator.",
                   HttpStatusCode.InternalServerError);
 
-            var rate = _mapper.Map<RateDTO>(response.FirstOrDefault(x => x.Currency == purchaseDTO.Currency));
+            var rate = _mapper.Map<RateDTO>(response);
 
             var purchase = _mapper.Map<Purchase>(purchaseDTO);
 

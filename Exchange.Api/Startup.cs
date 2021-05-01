@@ -14,6 +14,9 @@ using Microsoft.Extensions.Options;
 using System.Linq;
 using Exchange.Api.Mappings;
 using Exchange.Data.Models;
+using Exchange.Core.ExchangeRate;
+using Exchange.Core.ExchangeRate.Currencies;
+using Exchange.Core;
 
 namespace Exchange.Api
 {
@@ -54,6 +57,9 @@ namespace Exchange.Api
             });
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+            services.AddExchangeRate<USDRateProvider>(ISOCurrencyEnum.USD.ToString());
+            services.AddExchangeRate<BRLRateProvider>(ISOCurrencyEnum.BRL.ToString());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
