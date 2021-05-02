@@ -13,10 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using System.Linq;
 using Exchange.Api.Mappings;
-using Exchange.Data.Models;
-using Exchange.Core.ExchangeRate;
 using Exchange.Core.ExchangeRate.Currencies;
-using Exchange.Core;
 
 namespace Exchange.Api
 {

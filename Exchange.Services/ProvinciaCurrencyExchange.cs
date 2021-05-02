@@ -9,6 +9,7 @@ namespace Exchange.Services
     {
         private readonly AppSettings _appSettings;
         private readonly HttpService _httpService;
+
         public ProvinciaCurrencyExchange(HttpService httpService, IOptions<AppSettings> appSettings)
         {
             _httpService = httpService;
