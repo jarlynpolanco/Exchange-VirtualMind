@@ -20,8 +20,8 @@ For the database, keep the design as simple as possible. Assume that the users e
  
 the user. Include the database scripts you may need, such as those for database and tables creation.
 
-
 About the endpoints created above, we would like to know what do you think about using the user ID as the input endpoint. Also, how would you improve the transaction to ensure that the user who makes the purchase is the correct user?
+
 We will value:
 ●	That the web API is written in NET Core.
 ●	Service-oriented development.
@@ -32,7 +32,7 @@ We will value:
 ●	Errors log
 
 
-Angular (optional)
+#Angular (optional)
 Create a very simple app in Angular 2+ with two routes:
 a)	/quote will show the exchange rate of the dollar and real currencies by using the API developed in the previous step. Add a button for refreshing the exchange rates.
 b)	/purchase will list the same exchange rates on a) and a mini purchase form consisting of three text fields (user ID, currency, amount to purchase in pesos) and a button to create the transaction through our API. It will also show the result of the transaction.
