@@ -14,7 +14,6 @@ namespace Microsoft.Extensions.DependencyInjection
             services.Configure<ExchangeRateProviderConfig>(config => {
                 config.RegisterProvider<T>(currency);
             });
-
             return services;
         }
     }

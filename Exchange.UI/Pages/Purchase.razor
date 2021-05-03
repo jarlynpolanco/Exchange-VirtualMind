@@ -1,0 +1,93 @@
+﻿@page "/purchase"
+@inject HttpClient _httpClient
+@inject IToastService _toastService
+
+<Quote pageTitle="Exchange Purchase" />
+
+<br />
+<br />
+
+<EditForm Model="Model" OnValidSubmit="HandlePurchase">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-group">
+        <label for="userid">User ID</label>
+        <InputNumber @bind-Value="Model.UserId" class="form-control" id="userid" />
+    </div>
+    <div class="form-group">
+        <label for="currency">Currency</label>
+        <InputText @bind-Value="Model.Currency" class="form-control" id="currency" />
+    </div>
+    <div class="form-group">
+        <label for="amount">Amount Pesos</label>
+        <InputNumber @bind-Value="Model.Amount" class="form-control" id="amount" />
+    </div>
+    <button class="btn btn-primary" type="submit">
+        <span class="oi oi-pencil"></span> Make a purchase
+    </button>
+</EditForm>
+
+<br />
+
+@if (purchaseResponse != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Exchange Result Amount</th>
+                <th>Purchase Currency</th>
+                <th>User ID</th>
+                <th>User Name</th>
+                <th>User Full Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@purchaseResponse?.Data.AmountResult.ToString("C")</td>
+                <td>@Model.Currency.ToUpper()</td>
+                <td>@purchaseResponse?.Data.UserId</td>
+                <td>@purchaseResponse?.Data.UserName</td>
+                <td>@purchaseResponse?.Data.FullName</td>
+            </tr>
+        </tbody>
+    </table>
+}
+
+<br />
+
+@if (!string.IsNullOrEmpty(serviceResponseMessage))
+{
+    _toastService.ShowWarning(serviceResponseMessage);
+    serviceResponseMessage = null;
+}
+
+@code {
+    private PurchaseRequest Model = new PurchaseRequest();
+    private GenericResponse<PurchaseResponse> purchaseResponse;
+    private string serviceResponseMessage = null;
+
+    private async Task HandlePurchase()
+    {
+        purchaseResponse = null;
+        serviceResponseMessage = null;
+
+        var request = new HttpRequestMessage(HttpMethod.Post, Endpoints.ExchangePurchaseEndpoint);
+
+        request.Content = new StringContent(JsonConvert.SerializeObject(Model),
+           Encoding.UTF8, "application/json");
+
+
+        HttpResponseMessage response = await _httpClient.SendAsync(request);
+
+        if (response.StatusCode == HttpStatusCode.OK)
+        {
+            var content = await response.Content.ReadAsStringAsync();
+            purchaseResponse = JsonConvert.DeserializeObject<GenericResponse<PurchaseResponse>>(content);
+        }
+        else
+        {
+            var content = await response.Content.ReadAsStringAsync();
+            serviceResponseMessage = JsonConvert.DeserializeObject<GenericResponse<string>>(content)?.Message;
+        }
+    }
+}

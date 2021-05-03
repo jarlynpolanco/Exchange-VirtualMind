@@ -4,7 +4,6 @@ using Exchange.Core.ExchangeRate;
 using Exchange.Models;
 using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 

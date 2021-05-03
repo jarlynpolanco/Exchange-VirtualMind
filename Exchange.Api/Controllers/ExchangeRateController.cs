@@ -33,7 +33,7 @@ namespace Exchange.Api.Controllers
 
         [HttpGet("{currency}")]
         [Produces(typeof(RateDTO))]
-        public async Task<ActionResult<GenericResponse<RateDTO>>> GetRate(string currency)
+        public async Task<ActionResult<GenericResponse<RateDTO>>> Rate(string currency)
         {
             currency = currency.ToUpper();
             if (!_purchaseLimitService.IsValidCurrency(currency))

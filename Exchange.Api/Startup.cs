@@ -37,6 +37,14 @@ namespace Exchange.Api
                 options.UseSqlServer(appSettings.Value.ConnectionStrings.SingleOrDefault(x => x.Name == "ExchangeDb").Value));
             StaticConnectionString.ConnectionString = appSettings.Value.ConnectionStrings.SingleOrDefault(x => x.Name == "ExchangeDb").Value;
 
+            services.AddCors(o =>
+            {
+                o.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+            });
+
             services.AddTransient<UnitOfWork<AppDbContext>>();
             services.AddTransient<ILog, LogService>();
             services.AddAutoMapper(typeof(Maps));
@@ -73,6 +81,8 @@ namespace Exchange.Api
             app.UseSwaggerUi3();
 
             app.UseHttpsRedirection();
+
+            app.UseCors("CorsPolicy");
 
             app.UseRouting();
 

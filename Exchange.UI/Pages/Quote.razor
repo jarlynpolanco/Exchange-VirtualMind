@@ -1,0 +1,111 @@
+﻿@page "/quote"
+@inject HttpClient _httpClient
+@inject IToastService _toastService
+
+<h3>@pageTitle</h3>
+
+@if (exchangeRateUSD == null || exchangeRateBRL == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Exchange Buy</th>
+                <th>Exchange Sale</th>
+                <th>Exchange Date</th>
+                <th>Currency</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@exchangeRateUSD.Data.Buy</td>
+                <td>@exchangeRateUSD.Data.Sale</td>
+                <td>@exchangeRateUSD.Data.DateUpdate</td>
+                <td>USD</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br />
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Exchange Buy</th>
+                <th>Exchange Sale</th>
+                <th>Exchange Date</th>
+                <th>Currency</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@exchangeRateBRL.Data.Buy</td>
+                <td>@exchangeRateBRL.Data.Sale</td>
+                <td>@exchangeRateBRL.Data.DateUpdate</td>
+                <td>BRL</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br />
+    <div>
+        <button @onclick="RefreshExchangeRate" class="btn btn-danger">
+            <span class="oi oi-reload"></span>
+            Refresh Rates
+        </button>
+    </div>
+}
+@if (!isSuccess)
+{
+    _toastService.ShowError("Something went wrong getting rates");
+}
+
+@code {
+    [Parameter]
+    public string pageTitle { get; set; } = "Exchange Rate";
+
+    private GenericResponse<RateResponse> exchangeRateUSD;
+    private GenericResponse<RateResponse> exchangeRateBRL;
+    private bool isSuccess = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetRates();
+    }
+
+    private async Task RefreshExchangeRate()
+    {
+        exchangeRateUSD = null;
+        exchangeRateBRL = null;
+        await GetRates();
+    }
+
+    private async Task GetRates()
+    {
+        var request = new HttpRequestMessage(HttpMethod.Get, $"{Endpoints.ExchangeRateEndpoint}USD");
+        var response = await _httpClient.SendAsync(request);
+
+
+        if (response.StatusCode == System.Net.HttpStatusCode.OK)
+        {
+            var content = await response.Content.ReadAsStringAsync();
+            exchangeRateUSD = JsonConvert.DeserializeObject<GenericResponse<RateResponse>>(content);
+        }
+
+        request = new HttpRequestMessage(HttpMethod.Get, $"{Endpoints.ExchangeRateEndpoint}BRL");
+        response = await _httpClient.SendAsync(request);
+
+
+        if (response.StatusCode == HttpStatusCode.OK)
+        {
+            var content = await response.Content.ReadAsStringAsync();
+            exchangeRateBRL = JsonConvert.DeserializeObject<GenericResponse<RateResponse>>(content);
+        }
+        else
+            isSuccess = false;
+    }
+
+}

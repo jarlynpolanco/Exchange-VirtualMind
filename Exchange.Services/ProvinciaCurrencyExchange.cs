@@ -24,7 +24,7 @@ namespace Exchange.Services
                 Buy = decimal.Parse(response[0]),
                 Sale = decimal.Parse(response[1]),
                 DateUpdate = response[2]
-            };
+            };    
         }
     }
 }
