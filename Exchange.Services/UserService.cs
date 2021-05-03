@@ -1,5 +1,6 @@
 ﻿using Exchange.Data;
 using Exchange.Data.Models;
+using System.Collections.Generic;
 
 namespace Exchange.Services
 {
@@ -13,5 +14,7 @@ namespace Exchange.Services
         }
 
         public User FindUserById(int id) => _unitOfWork.GetRepository<User>().Get(x => x.Id == id);
+
+        public IEnumerable<User> FindAllUsers() => _unitOfWork.GetRepository<User>().GetAll();
     }
 }

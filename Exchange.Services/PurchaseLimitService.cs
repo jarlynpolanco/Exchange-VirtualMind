@@ -13,9 +13,6 @@ namespace Exchange.Services
             _unitOfWork = unitOfWork;
         }
 
-        public bool IsValidCurrency(string currency) => _unitOfWork.GetRepository<PurchaseLimit>().Count(x => x.Currency == currency) > 0;
-
-
         public IEnumerable<PurchaseLimit> GetPurchaseLimits => _unitOfWork.GetRepository<PurchaseLimit>().GetAll();
 
     }

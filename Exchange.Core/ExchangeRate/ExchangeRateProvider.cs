@@ -26,9 +26,8 @@ namespace Exchange.Core
 
             if (!(_serviceProvider.GetService(providerType) is ICurrencyRateProvider provider))
             {
-                throw new HttpStatusException($"Currency provider does not exist", HttpStatusCode.Forbidden);
+                throw new HttpStatusException($"Currency provider does not exist", HttpStatusCode.NotFound);
             }
-
             return await provider.GetRateAsync(currency);
         }
     }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Exchange.Data.Models
@@ -12,5 +13,7 @@ namespace Exchange.Data.Models
         public string Message { get; set; }
 
         public string LogType { get; set; }
+
+        public DateTime Date { get; set; }
     }
 }

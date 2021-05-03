@@ -1,10 +1,8 @@
 ﻿using Exchange.Contracts;
 using Exchange.Core.Exceptions;
-using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Text;
 
 namespace Exchange.Core.ExchangeRate
 {
@@ -26,9 +24,8 @@ namespace Exchange.Core.ExchangeRate
         {
             if (!_providers.TryGetValue(currency, out Type providerType))
             {
-                throw new HttpStatusException($"Currency not supported", HttpStatusCode.Forbidden);
+                throw new HttpStatusException($"The currency sent is not defined", HttpStatusCode.BadRequest);
             }
-
             return providerType;
         }
     }

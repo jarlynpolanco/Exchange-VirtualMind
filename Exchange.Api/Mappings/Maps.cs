@@ -12,6 +12,7 @@ namespace Exchange.Api.Mappings
             CreateMap<PurchaseDTO, Purchase>().ReverseMap();
             CreateMap<Purchase, PurchaseResponseDTO>();
             CreateMap<RateDTO, CurrencyRate>().ReverseMap();
+            CreateMap<User, UserDTO>().ReverseMap();
         }
        
     }
